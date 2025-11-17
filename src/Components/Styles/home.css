@@ -50,10 +50,19 @@
 }
 
 .cardsDiv {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
    gap: 20px;
    width: 85%;
    margin: auto;
    margin-bottom: 40px;
+}
+
+/* Large screens - 4 products per row */
+@media only screen and (min-width: 1400px) {
+   .cardsDiv {
+      grid-template-columns: repeat(4, 1fr);
+   }
 }
 
 .card {
@@ -62,14 +71,52 @@
    color: black;
    border-radius: 10px;
    padding-bottom: 4px;
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   cursor: pointer;
+   overflow: hidden;
+}
+
+.card:hover {
+   transform: scale(1.05);
+   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .imageDiv {
    text-align: center;
+   overflow: hidden;
+   border-radius: 10px 10px 0 0;
 }
 
 .imageDiv>img {
    width: 80%;
+   transition: transform 0.3s ease;
+}
+
+.card:hover .imageDiv>img {
+   transform: scale(1.1);
+}
+
+.imagePlaceholder {
+   width: 80%;
+   height: 200px;
+   background-color: #e3e3e3;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin: 0 auto;
+   border-radius: 8px;
+   color: #999;
+   font-size: 0.9rem;
+   transition: transform 0.3s ease;
+}
+
+.card:hover .imagePlaceholder {
+   transform: scale(1.1);
+}
+
+.imagePlaceholder span {
+   color: #999;
+   font-weight: 500;
 }
 
 .dataDiv {
@@ -120,6 +167,24 @@
    font-weight: bold;
    font-size: .9rem;
    cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 5px;
+   position: relative;
+}
+
+.btnText {
+   display: inline;
+}
+
+.btnIcon {
+   display: none;
+}
+
+.cardBtn:hover {
+   background-color: rgb(200, 0, 0);
+   transform: scale(1.05);
 }
 
 .list {
@@ -494,6 +559,66 @@
    width: 70%;
    margin: auto;
    font-size: .9rem;
+}
+
+/* Mobile view - 2 products per row, hide description */
+@media only screen and (max-width: 768px) {
+   .cardsDiv {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      width: 95%;
+   }
+
+   .card {
+      width: 100%;
+   }
+
+   .dataDiv .list {
+      display: none;
+   }
+
+   .dataDiv {
+      min-height: auto;
+      padding: 6px;
+   }
+
+   .imageDiv>img,
+   .imagePlaceholder {
+      width: 90%;
+      height: 150px;
+   }
+
+   .title {
+      font-size: 0.85rem;
+   }
+
+   .price {
+      font-size: 0.9rem;
+   }
+
+   .strPrice {
+      font-size: 0.75rem;
+   }
+
+   .cardBtn {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 50%;
+      padding: 0;
+   }
+
+   .cardBtn .btnText {
+      display: none;
+   }
+
+   .cardBtn .btnIcon {
+      display: block;
+   }
+
+   .reviewsDiv {
+      font-size: 0.65rem;
+   }
 }
 
 @media only screen and (max-width:900px) {

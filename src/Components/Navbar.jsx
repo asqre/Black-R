@@ -46,7 +46,7 @@ const Navbar = () => {
                      size={25}
                      onClick={() => setCart(!cart)}
                   />
-                  {cart ? <CartPopup cart={cart} setCart={setCart} /> : null}
+                  <CartPopup cart={cart} setCart={setCart} />
                   <p onClick={() => setCart(!cart)} className="cartCount flex">
                      {cartLen.length}
                   </p>

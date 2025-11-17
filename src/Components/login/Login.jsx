@@ -301,25 +301,37 @@ export function Login() {
     const handleSubmit = async(e) => {
         
         e.preventDefault();
-        const response = await fetch("http://localhost:5000/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({email: credentials.email, password: credentials.password})
-        });
-        const json = await response.json()
-        console.log(json);
-        if (json.token){
-            // Save the auth token and redirect
-            localStorage.setItem('token', json.token); 
-            alert("successfully login");
-            history("/");
-            
-        }
-        else{
-            alert("invalid details")
-        }
+        // For now, skip API call and directly navigate to admin dashboard
+        localStorage.setItem('token', 'admin-token');
+        localStorage.setItem('isAdmin', 'true');
+        history("/admin/dashboard");
+        
+        // Original API call code (commented out for now)
+        // const response = await fetch("http://localhost:5000/login", {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({email: credentials.email, password: credentials.password})
+        // });
+        // const json = await response.json()
+        // console.log(json);
+        // if (json.token){
+        //     // Save the auth token and redirect
+        //     localStorage.setItem('token', json.token);
+        //     // Check if user is admin (assuming backend returns isAdmin or role)
+        //     if (json.isAdmin || json.role === 'admin') {
+        //         localStorage.setItem('isAdmin', 'true');
+        //         alert("Admin login successful");
+        //         history("/admin/dashboard");
+        //     } else {
+        //         alert("successfully login");
+        //         history("/");
+        //     }
+        // }
+        // else{
+        //     alert("invalid details")
+        // }
     };
     
 
@@ -338,7 +350,7 @@ export function Login() {
                         <h2>Login</h2>
                     </div>
                     <Form onSubmit={handleSubmit}>
-                        <div className="socials">
+                        {/* <div className="socials">
                             <div><a href="http://localhost:5000/auth/google">
                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png" alt="" />
                                 </a></div>
@@ -348,7 +360,7 @@ export function Login() {
                         
                                 
                            
-                        </div>
+                        </div> */}
                         <div className="login-email">
                             
                             <input

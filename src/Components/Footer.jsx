@@ -43,14 +43,10 @@ const Footer = () => {
                <div className="footerCol">
                   <p className="linksHeader">SHOP</p>
                   <div className="hideLinks">
-                     <p>True Wireless Earbuds</p>
-                     <p>Wireless Headphones</p>
-                     <p>Wired Headphones</p>
-                     <p>Wireless Speakers</p>
-                     <p>Home Audio</p>
-                     <p>Mobile Accessories</p>
-                     <p>Smart Watches</p>
-                     <p>Misfit</p>
+                     <p>Adaptors</p>
+                     <p>Cables</p>
+                     <p>Earbuds TWS</p>
+                     <p>Neck band</p>
                   </div>
                </div>
                <div className="footerCol">
@@ -82,7 +78,7 @@ const Footer = () => {
             </div>
          </div>
 
-         <div className="midFooter flex">
+         {/* <div className="midFooter flex">
             <div className="paymentsImages">
                <img className="imageSize"
                   src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Fotter_payment_icn_2_900x_aff68517-98f4-4a82-9aee-2405cea66251_350x.png?v=1650262054"
@@ -100,9 +96,9 @@ const Footer = () => {
                   alt=""
                />
             </div>
-         </div>
+         </div> */}
          <div className="copyright">
-            <p>© 2022 Imagine Marketing Limited. All Rights Reserved.</p>
+            <p>© 2025 Imagine Marketing Limited. All Rights Reserved.</p>
          </div>
       </div>
    );

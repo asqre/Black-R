@@ -7,74 +7,74 @@ import { getProducts } from "../../Redux/Products/action";
 import { sortProducts } from "../../Redux/Products/action";
 import { addToCart } from "../../Redux/AddToCart/actions";
 import { useNavigate } from "react-router";
+import { useToast } from "../../Context/ToastContext";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export const Products = () => {
     let {id} = useParams();
     const dispatch = useDispatch();
-    const products = useSelector((store) => store.products.products)
+    const products = useSelector((store) => store.products.products);
+    const cartItems = useSelector((store) => store.cart.data);
     const [index, setIndex] = useState();
     const navigate = useNavigate();
+    const { showToast } = useToast();
+    const [imageErrors, setImageErrors] = useState({});
+
+    const handleImageError = (productId) => {
+        setImageErrors(prev => ({ ...prev, [productId]: true }));
+    };
     
     if(id === undefined) {
         id = "/"
     }
 
     const headings = {
-        smart_watches : "Smart Watches",
-        wireless_earbuds: "Wireless Earbuds",
-        wireless_speakers : "Wireless Speakers",
-        home_theatre : "Home Theatre System & Soundbars",
-        wired_earphones : "Wired Earphones",
-        mobile_accessories : "Mobile Accesories",
-        limited_edition : "Limited Edition",
-        grooming : "Misfit - Best Trimmer for Men"
+        adaptors: "Adaptors",
+        cables: "Cables",
+        earbuds_tws: "Earbuds TWS",
+        neck_band: "Neck Band",
     }
 
-
     const imgURL = {
-        smart_watches : "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Smart-Watch_Catgry-web.jpg?v=1634717240",
-        wireless_earbuds: "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Airdopes_Catgry-web_7cf20899-eb4a-427f-9a8a-799d7e1c37fa.jpg?v=1634716734",
-        wireless_speakers : "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Stone-Speakers_Catgry-web_5ddac427-ef95-4cc3-bcd7-5f08ab93359d.jpg?v=1634903645",
-        home_theatre : "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Aavante_category_web_1.jpg?v=1634903645",
-        wired_earphones : "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Bassheads-_Catgry_web.jpg?v=1634717143",
-        mobile_accessories : "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Mobile_Accessories_web.jpg?v=1634903645",
-        limited_edition : "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Limited_edition_cat_web.jpg?v=1634903645",
-        grooming : "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/MISFIT-T200_Catgry_Web.jpg?v=1634806683"
+        adaptors: "https://via.placeholder.com/1200x300?text=Adaptors",
+        cables: "https://via.placeholder.com/1200x300?text=Cables",
+        earbuds_tws: "https://via.placeholder.com/1200x300?text=Earbuds+TWS",
+        neck_band: "https://via.placeholder.com/1200x300?text=Neck+Band",
     }
     
     useEffect(() => {
-
         getData()
-
     }, [id]);
 
     const getData = () => {
-        fetch(`http://localhost:5000/products/${id}`)
-        .then((res) => res.json())
-        .then(data => {
-            dispatch(getProducts(data.products))
-        })
+        // Use static product data instead of API
+        import("../../data/productsData").then((module) => {
+            const filteredProducts = module.getProductsByCategory(id);
+            dispatch(getProducts(filteredProducts));
+        });
     }
 
     const dataToCart = (ele) => {
-        const cart = JSON.parse(localStorage.getItem("cartBoat")) || [];
+        // Check if item already exists in cart
+        const existingCartItem = cartItems.find(item => item._id === ele._id);
+        
+        if (existingCartItem) {
+            showToast(`${ele.productName} - quantity increased in your Cart`);
+        } else {
+            showToast(`${ele.productName} - added to your Cart`);
+        }
 
-        cart.push(ele);
-
-        localStorage.setItem("cartBoat", JSON.stringify(cart))
-
-        alert(`- ${ele.productName} - added to your Cart`)
-
-        dispatch(addToCart(ele))
+        // Redux reducer will handle localStorage sync automatically
+        dispatch(addToCart(ele));
     } 
 
-    const navigateToDetails = () =>{
-        navigate("/products/detail")
+    const navigateToDetails = (productId) => {
+        navigate(`/product/${productId}`)
     }
 
     return (
         <div className="ga_Products">
-            <img className="ga_topImage" src={id === "/" ? "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Rockerz-_Catgry_web_d201c6e3-e067-4280-a127-56a2e1b51399.jpg?v=1634806683": imgURL[id]} alt="" />
+            <img className="ga_topImage" src={id === "/" ? "https://via.placeholder.com/1200x300?text=All+Products": imgURL[id]} alt="" />
 
             <div className="ga_main">
                 <h1 className="ga_heading">{id === "/" ? "All Products": headings[id]}</h1>
@@ -104,23 +104,41 @@ export const Products = () => {
 
             <div className="ga_products_container">
                 {products.map((ele, ind) => {
+                    const imageSrc = ind === index ? ele.imageURLcolor2 : ele.imageURLcolor1;
+                    const hasImageError = imageErrors[ele._id] || !imageSrc;
+                    
                     return (
                         <div key={ind} className="ga_productCard">
-                            <img onMouseOver={() => {
-                                setIndex(ind)
-                            }} onMouseOut={() => {
-                                setIndex(-1);
-                            }} src={ind === index ? ele.imageURLcolor2 : ele.imageURLcolor1} alt="" onClick={() => {
-                                navigateToDetails()
-                            }}/>
+                            {hasImageError ? (
+                                <div 
+                                    className="imagePlaceholder" 
+                                    onClick={() => navigateToDetails(ele._id)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <span>No Image</span>
+                                </div>
+                            ) : (
+                                <img 
+                                    onMouseOver={() => setIndex(ind)}
+                                    onMouseOut={() => setIndex(-1)}
+                                    src={imageSrc} 
+                                    alt={ele.productName || ""}
+                                    onClick={() => navigateToDetails(ele._id)}
+                                    onError={() => handleImageError(ele._id)}
+                                    style={{ cursor: 'pointer' }}
+                                />
+                            )}
                             <div className="ga_productInfo">
                                 <div className="ga_rating">
                                     <FontAwesomeIcon className="ga_star" icon={faStar} />
                                     <h5>{ele.Rating} ({ele.RatingCount})</h5>
                                 </div>
-                                <h4 onClick={() => {
-                                    navigateToDetails();
-                                }}>{ele.productName}</h4>
+                                <h4 
+                                    onClick={() => navigateToDetails(ele._id)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    {ele.productName}
+                                </h4>
                                 <div className="ga_price">
                                     <div>
                                         <h4>₹ {ele.price}</h4>
@@ -128,7 +146,10 @@ export const Products = () => {
                                     </div>
                                     <button onClick={() => {
                                         dataToCart(ele)
-                                    }}>Add +</button>
+                                    }}>
+                                        <span className="btnText">Add +</span>
+                                        <AiOutlineShoppingCart className="btnIcon" size={16} />
+                                    </button>
                                 </div>
 
                                 <h5>2 colors available</h5>

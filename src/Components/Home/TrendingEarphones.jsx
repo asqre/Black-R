@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import { AiFillStar } from "react-icons/ai";
+import React, { useState, useEffect } from "react";
+import { AiFillStar, AiOutlineShoppingCart } from "react-icons/ai";
+import { getProductsByCategory } from "../../data/productsData";
 
 const TrendingEarphones = ({ handleDispatch }) => {
    const [useClass, setUseClass] = useState("first");
-   // const [data, setData] = useState([]);
+   const [data, setData] = useState([]);
+   const [imageErrors, setImageErrors] = useState({});
 
-   // const getData = async () => {
-   //    let fetched = await fetch(
-   //       "http://localhost:5000/products/wireless_earbuds"
-   //    );
-   //    fetched = await fetched.json();
-   //    console.log(fetched.products.slice(0, 4));
-   //    setData(fetched.products.slice(0, 4));
-   // };
+   useEffect(() => {
+      // Get Earbuds TWS products
+      const earbudsProducts = getProductsByCategory("earbuds_tws");
+      setData(earbudsProducts.slice(0, 4));
+   }, []);
 
-   // useEffect(() => {
-   //    getData();
-   // }, []);
+   const handleImageError = (productId) => {
+      setImageErrors(prev => ({ ...prev, [productId]: true }));
+   };
 
-   let data = [
+   // Fallback data if no products found
+   const fallbackData = [
       {
          _id: "6272991704f82bb9d1caa7ba",
          imageURLcolor1:
@@ -77,6 +77,9 @@ const TrendingEarphones = ({ handleDispatch }) => {
       },
    ];
 
+   // Use static data if available, otherwise use fallback
+   const displayData = data.length > 0 ? data : fallbackData;
+
    return (
       <div className="topSellersDiv">
          <h1 className="headingText">Trending Earphones</h1>
@@ -101,11 +104,21 @@ const TrendingEarphones = ({ handleDispatch }) => {
             </p>
          </div>
          <div className="cardsDiv flex">
-            {data.map((e) => {
+            {displayData.map((e) => {
                return (
                   <div key={e._id} className="card">
                      <div className="imageDiv">
-                        <img src={e.imageURLcolor1} alt="" />
+                        {imageErrors[e._id] || !e.imageURLcolor1 ? (
+                           <div className="imagePlaceholder">
+                              <span>No Image</span>
+                           </div>
+                        ) : (
+                           <img 
+                              src={e.imageURLcolor1} 
+                              alt={e.productName || ""}
+                              onError={() => handleImageError(e._id)}
+                           />
+                        )}
                      </div>
                      <div className="dataDiv">
                         <p className="reviewsDiv">
@@ -122,7 +135,8 @@ const TrendingEarphones = ({ handleDispatch }) => {
                               onClick={() => handleDispatch(e)}
                               className="cardBtn"
                            >
-                              ADD +
+                              <span className="btnText">ADD +</span>
+                              <AiOutlineShoppingCart className="btnIcon" size={18} />
                            </button>
                         </div>
                         <ul className="list">
