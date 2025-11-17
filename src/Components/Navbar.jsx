@@ -37,10 +37,10 @@ const Navbar = () => {
             
             <div className="navSearch flex">
                <div className="iconsDiv flex">
-                  <CgProfile onClick={() => setLogin(!login)} size={25} data-profile-icon="true" />
+                  {/* <CgProfile onClick={() => setLogin(!login)} size={25} data-profile-icon="true" />
                   {login ? (
                      <LoginPopup setLogin={setLogin} login={login} />
-                  ) : null}
+                  ) : null} */}
                   <AiOutlineShoppingCart
                      className="cartIcon"
                      size={25}

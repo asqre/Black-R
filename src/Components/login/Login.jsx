@@ -10,11 +10,20 @@ const Container = styled.div`
     border: 0.1px solid black;
     color : white !important;
     
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
     
     input {
         background-color : #141414;
         border-radius : 5px;
         color : white
+    }
+    
+    input:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
     }
     a {
         color: #ea2127 !important;
@@ -295,16 +304,28 @@ export function Login() {
     let history = useNavigate();
     const [flag, setFlag] = useState(false);
     const [forgotPass, setForgotPass] = useState("first");
+    const [loading, setLoading] = useState(false);
    
     
     
     const handleSubmit = async(e) => {
         
         e.preventDefault();
-        // For now, skip API call and directly navigate to admin dashboard
-        localStorage.setItem('token', 'admin-token');
-        localStorage.setItem('isAdmin', 'true');
-        history("/admin/dashboard");
+        
+        // Validate credentials without API call
+        if (credentials.email === "admin@gmail.com" && credentials.password === "admin1234") {
+            setLoading(true);
+            
+            // Show loading for 3 seconds before redirecting
+            setTimeout(() => {
+                localStorage.setItem('token', 'admin-token');
+                localStorage.setItem('isAdmin', 'true');
+                setLoading(false);
+                history("/admin/dashboard");
+            }, 3000);
+        } else {
+            alert("Invalid credentials. Please use admin@gmail.com / admin1234");
+        }
         
         // Original API call code (commented out for now)
         // const response = await fetch("http://localhost:5000/login", {
@@ -366,6 +387,7 @@ export function Login() {
                             <input
                                 name = "email"
                                 placeholder="Email"
+                                value={credentials.email}
                                 onChange={onChange}
                                 type="email"
                                 id="customer_email"
@@ -377,6 +399,7 @@ export function Login() {
                                 <input
                                     name ="password"
                                     placeholder="Password"
+                                    value={credentials.password}
                                     onChange={onChange}
                                     type="password"
                                     id="customer_password"
@@ -393,10 +416,30 @@ export function Login() {
                             <p>
                                 <input
                                     type="submit"
-                                    value="Sign In"
+                                    value={loading ? "Logging in..." : "Sign In"}
                                     className="btn"
+                                    disabled={loading}
                                 />
                             </p>
+                            {loading && (
+                                <div style={{
+                                    textAlign: "center",
+                                    marginTop: "15px",
+                                    color: "#ea2127"
+                                }}>
+                                    <div style={{
+                                        display: "inline-block",
+                                        width: "20px",
+                                        height: "20px",
+                                        border: "3px solid #ea2127",
+                                        borderTop: "3px solid transparent",
+                                        borderRadius: "50%",
+                                        animation: "spin 1s linear infinite",
+                                        marginRight: "10px"
+                                    }}></div>
+                                    Loading...
+                                </div>
+                            )}
                             <div style={{textAlign :"center"}}>
                             New customer?
                             <Link to="/account/register">
