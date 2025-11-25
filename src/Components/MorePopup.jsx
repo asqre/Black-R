@@ -5,8 +5,8 @@ const MorePopup = () => {
       <div className="morePopup">
          <p>Gifting</p>
          <p>Offer Zone</p>
-         <p>Do What Floats Your boAt</p>
-         <p>Meet the boAtheads</p>
+         <p>Experience Black-R</p>
+         <p>Join the Black-R Community</p>
          <p>Corporate Orders</p>
          <p>Earn Rs.100</p>
          <p>Careers</p>

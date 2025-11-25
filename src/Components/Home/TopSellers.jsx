@@ -19,7 +19,7 @@ const TopSellers = ({ handleDispatch }) => {
             "https://cdn.shopify.com/s/files/1/0057/8938/4802/products/main2_529ecf13-c993-4fe7-a2d6-9357f1a47db4_600x.png?v=1650387008",
          imageURLcolor2:
             "https://cdn.shopify.com/s/files/1/0057/8938/4802/products/main6_2_600x.png?v=1640628318",
-         productName: "boAt Watch Xtend‌",
+         productName: "Black-R Watch Xtend‌",
          price: 2499,
          strikedPrice: 7990,
          Rating: 4.68,
@@ -61,7 +61,7 @@ const TopSellers = ({ handleDispatch }) => {
             "https://cdn.shopify.com/s/files/1/0057/8938/4802/products/a6549acb-b075-4c3e-8ed3-9c9fcba32d42_600x.png?v=1625046216",
          imageURLcolor2:
             "https://cdn.shopify.com/s/files/1/0057/8938/4802/products/8f01d1e9-48f4-4e55-886d-0b255b9bbf24_600x.png?v=1625045855",
-         productName: "boAt Storm",
+         productName: "Black-R Storm",
          price: 2499,
          strikedPrice: 5990,
          Rating: 4.79,

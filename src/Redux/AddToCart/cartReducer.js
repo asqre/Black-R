@@ -8,7 +8,7 @@ import {
 // Load cart from localStorage on initialization
 const loadCartFromStorage = () => {
   try {
-    const cartData = localStorage.getItem("cartBoat");
+    const cartData = localStorage.getItem("cartBlackR");
     if (cartData) {
       const parsed = JSON.parse(cartData);
       return { data: parsed };
@@ -24,7 +24,7 @@ const init = loadCartFromStorage();
 // Save cart to localStorage
 const saveCartToStorage = (cartData) => {
   try {
-    localStorage.setItem("cartBoat", JSON.stringify(cartData));
+    localStorage.setItem("cartBlackR", JSON.stringify(cartData));
   } catch (error) {
     console.error("Error saving cart to localStorage:", error);
   }

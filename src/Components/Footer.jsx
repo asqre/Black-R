@@ -7,6 +7,7 @@ import {
    FaYoutube,
    FaLinkedinIn,
 } from "react-icons/fa";
+import Logo from "../assets/logo.png";
 
 const Footer = () => {
    return (
@@ -16,8 +17,8 @@ const Footer = () => {
                <div>
                   <img
                      className="footerLogo"
-                     src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Boat-Logo_200x.png?v=1600753267"
-                     alt=""
+                     src={Logo}
+                     alt="Black-R"
                   />
                </div>
                <p className="subscribeText">
@@ -65,7 +66,7 @@ const Footer = () => {
                <div className="footerCol">
                   <p className="linksHeader">COMPANY</p>
                   <div className="hideLinks">
-                     <p>About boAt</p>
+                     <p>About Black-R</p>
                      <p>News</p>
                      <p>Read Our Blog</p>
                      <p>Careers</p>

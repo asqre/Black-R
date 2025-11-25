@@ -1,13 +1,30 @@
+/* ========================================
+   FOOTER - Black-R Interactive Design
+======================================== */
+
 .footer {
    width: 100%;
    min-height: 524px;
-   background-color: black;
+   background: linear-gradient(180deg, #0d0d0d, #000000);
    color: white;
    box-sizing: border-box;
+   position: relative;
+   overflow: hidden;
+}
+
+.footer::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 1px;
+   background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
 }
 
 .firstFooterDiv {
    justify-content: space-around;
+   padding-top: 40px;
 }
 
 .sendEmailBox {
@@ -15,25 +32,52 @@
    padding-left: 110px;
    padding-right: 50px;
    box-sizing: border-box;
+   animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+   from {
+      opacity: 0;
+      transform: translateY(30px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
 }
 
 .subscribeText {
    font-size: .9rem;
    width: 90%;
-   color: rgb(224, 224, 224);
+   color: rgb(200, 200, 200);
+   line-height: 1.6;
 }
 
 .footerLogo {
-   width: 85px;
+   width: 100px;
+   transition: all 0.3s ease;
+   filter: drop-shadow(0 0 0 transparent);
+}
+
+.footerLogo:hover {
+   transform: scale(1.05);
+   filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.4));
 }
 
 .footerInputDiv {
-   border: 1px solid rgb(37, 37, 37);
+   border: 1px solid rgba(255, 255, 255, 0.1);
    height: 50px;
    width: 90%;
    justify-content: space-between;
-   border-radius: 5px;
+   border-radius: 8px;
    flex-wrap: wrap;
+   transition: all 0.3s ease;
+   background: rgba(255, 255, 255, 0.02);
+}
+
+.footerInputDiv:focus-within {
+   border-color: rgba(255, 0, 0, 0.5);
+   box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
 }
 
 .footerInput {
@@ -47,33 +91,75 @@
 
 .footerInput,
 .footerInput::placeholder {
-   font-size: .8rem;
+   font-size: .85rem;
+   color: rgba(255, 255, 255, 0.5);
 }
 
 .footerInput:focus {
    outline: none;
 }
 
+.footerInput:focus::placeholder {
+   color: rgba(255, 255, 255, 0.3);
+}
+
 .footerBtn {
    width: 40%;
    height: 80%;
    margin-right: 5px;
-   background-color: rgb(255, 0, 0);
-   border: rgb(255, 0, 0);
-   color: rgb(224, 224, 224);
+   background: linear-gradient(135deg, #ff0000, #cc0000);
+   border: none;
+   color: white;
    font-weight: bold;
    cursor: pointer;
+   border-radius: 6px;
+   transition: all 0.3s ease;
+   position: relative;
+   overflow: hidden;
+}
+
+.footerBtn::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: -100%;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+   transition: left 0.5s ease;
+}
+
+.footerBtn:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+}
+
+.footerBtn:hover::before {
+   left: 100%;
 }
 
 .mediaLinks {
-   height: 30px;
-   gap: 6%;
+   height: 40px;
+   gap: 5%;
    padding: 5px;
-   margin-top: 10px;
-   font-size: 1.2rem;
+   margin-top: 20px;
+   font-size: 1.3rem;
    width: 90%;
    cursor: pointer;
+}
 
+.mediaLinks > * {
+   transition: all 0.3s ease;
+   padding: 10px;
+   border-radius: 50%;
+   background: rgba(255, 255, 255, 0.05);
+}
+
+.mediaLinks > *:hover {
+   color: #ff0000;
+   transform: translateY(-5px) scale(1.1);
+   background: rgba(255, 0, 0, 0.1);
+   box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
 }
 
 .footerLinks {
@@ -81,6 +167,9 @@
    flex: .8;
    padding-top: 20px;
    cursor: pointer;
+   animation: fadeInUp 0.6s ease-out;
+   animation-delay: 0.2s;
+   animation-fill-mode: both;
 }
 
 .footerLinks>div {
@@ -91,6 +180,51 @@
 .linksHeader {
    font-size: 1.1rem;
    font-weight: bold;
+   color: white;
+   position: relative;
+   padding-bottom: 10px;
+   margin-bottom: 5px;
+}
+
+.linksHeader::after {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 30px;
+   height: 2px;
+   background: linear-gradient(90deg, #ff0000, transparent);
+}
+
+.footerCol p {
+   transition: all 0.3s ease;
+   padding: 5px 0;
+   position: relative;
+}
+
+.footerCol .hideLinks p:hover {
+   color: #ff0000;
+   transform: translateX(5px);
+}
+
+.footerCol .hideLinks p::before {
+   content: '';
+   position: absolute;
+   left: -15px;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 0;
+   height: 0;
+   border-left: 5px solid #ff0000;
+   border-top: 4px solid transparent;
+   border-bottom: 4px solid transparent;
+   opacity: 0;
+   transition: all 0.3s ease;
+}
+
+.footerCol .hideLinks p:hover::before {
+   opacity: 1;
+   left: -10px;
 }
 
 .midFooter {
@@ -102,17 +236,35 @@
 .download {
    width: 250px;
    margin-right: -40px;
+   font-weight: bold;
 }
 
 .linksToStores {
    gap: 3%;
 }
 
+.linksToStores img {
+   transition: all 0.3s ease;
+   border-radius: 8px;
+}
+
+.linksToStores img:hover {
+   transform: translateY(-3px) scale(1.05);
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
 .copyright {
    text-align: center;
-   padding: 10px 0px;
-   font-size: .9rem;
+   padding: 20px 0px;
+   font-size: .85rem;
+   color: rgba(255, 255, 255, 0.5);
+   background: rgba(0, 0, 0, 0.3);
+   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
 
 @media only screen and (max-width: 1000px) {
    .firstFooterDiv {
@@ -128,6 +280,7 @@
    .footerLinks {
       width: 420px;
       margin-left: 60px;
+      margin-top: 30px;
    }
 
    .midFooter {
@@ -142,7 +295,7 @@
    .linksToStores {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 10px;
    }
 
    .download {
@@ -160,18 +313,33 @@
       margin-left: 0px;
    }
 
+   .sendEmailBox {
+      margin-left: 20px;
+      padding-right: 20px;
+   }
+
    .imageSize {
       width: 90%;
       margin-left: 20px;
    }
 
    .copyright {
-      width: 90%;
+      width: 100%;
       margin: auto;
+      padding: 15px 10px;
    }
 
    .linksToStores {
       width: 90%;
       margin: auto;
+   }
+
+   .footerInputDiv {
+      width: 95%;
+   }
+
+   .mediaLinks {
+      width: 95%;
+      justify-content: center;
    }
 }

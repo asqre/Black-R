@@ -2,9 +2,9 @@ import React from "react";
 
 const BoatBlogs = () => {
    return (
-      <div className="boatBlogs">
+      <div className="blackRBlogs">
          <div className="blogHeading">
-            <h1 className="blogHead">boAt Blogs</h1>
+            <h1 className="blogHead">Black-R Blogs</h1>
          </div>
          <div className="blogImageDiv flex">
             <div>

@@ -3,7 +3,7 @@ import star from "./Images/Star11.png";
 import warranty from "./Images/image 116.png";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductById } from "../../data/productsData";
+import { fetchProductById } from "../../services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../Redux/AddToCart/actions";
 import { useToast } from "../../Context/ToastContext";
@@ -203,6 +203,19 @@ const Container = styled.div`
     margin-bottom: 15px;
   }
   
+  & .description {
+    color: #b4b4b4;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 20px 0;
+  }
+  
+  & .colorInfo {
+    color: #9b9b9b;
+    font-size: 0.95rem;
+    margin: 10px 0;
+  }
+  
   & .pricing {
     display: flex;
     align-items: center;
@@ -335,11 +348,28 @@ const Container = styled.div`
   
   & .loading {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 60vh;
     color: white;
     font-size: 1.5rem;
+    gap: 20px;
+  }
+  
+  & .loadingSpinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 0, 0, 0.1);
+    border-top-color: #ff0000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
   
   & .error {
@@ -378,25 +408,37 @@ export const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
   const [imageError, setImageError] = useState(false);
   const [btn, setBtn] = useState("ADD TO CART");
 
   useEffect(() => {
     if (id) {
-      const productData = getProductById(id);
-      if (productData) {
-        setProduct(productData);
-        setLoading(false);
-      } else {
-        setError("Product not found");
-        setLoading(false);
-      }
+      loadProduct();
     } else {
       setError("Product ID is missing");
       setLoading(false);
     }
   }, [id]);
+
+  const loadProduct = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const productData = await fetchProductById(id);
+      if (productData) {
+        setProduct(productData);
+      } else {
+        setError("Product not found");
+      }
+    } catch (err) {
+      console.error("Failed to load product:", err);
+      setError("Failed to load product details. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleImageError = () => {
     setImageError(true);
@@ -421,8 +463,8 @@ export const ProductDetails = () => {
   };
 
   const renderStars = (rating) => {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
+    const fullStars = Math.floor(rating || 0);
+    const hasHalfStar = (rating || 0) % 1 !== 0;
     const stars = [];
     
     for (let i = 0; i < fullStars; i++) {
@@ -433,7 +475,7 @@ export const ProductDetails = () => {
       stars.push(<AiOutlineStar key="half" color="#FFD700" size={20} />);
     }
     
-    const remainingStars = 5 - Math.ceil(rating);
+    const remainingStars = 5 - Math.ceil(rating || 0);
     for (let i = 0; i < remainingStars; i++) {
       stars.push(<AiOutlineStar key={`empty-${i}`} color="#666" size={20} />);
     }
@@ -441,10 +483,29 @@ export const ProductDetails = () => {
     return stars;
   };
 
+  // Get all available images
+  const getImages = () => {
+    if (!product) return [];
+    const images = [];
+    if (product.imageURLcolor1) images.push(product.imageURLcolor1);
+    if (product.imageURLcolor2) images.push(product.imageURLcolor2);
+    if (product.imageGallery && product.imageGallery.length > 0) {
+      product.imageGallery.forEach(img => {
+        if (img && !images.includes(img)) {
+          images.push(img);
+        }
+      });
+    }
+    return images;
+  };
+
   if (loading) {
     return (
       <Container>
-        <div className="loading">Loading product details...</div>
+        <div className="loading">
+          <div className="loadingSpinner"></div>
+          <span>Loading product details...</span>
+        </div>
       </Container>
     );
   }
@@ -460,7 +521,12 @@ export const ProductDetails = () => {
     );
   }
 
-  const currentImage = selectedImage === 1 ? product.imageURLcolor1 : product.imageURLcolor2;
+  const images = getImages();
+  const currentImage = images[selectedImage] || product.imageURLcolor1;
+  const savings = product.strikedPrice ? product.strikedPrice - product.price : 0;
+  const discountPercent = product.strikedPrice 
+    ? Math.round((savings / product.strikedPrice) * 100) 
+    : 0;
 
   return (
     <div>
@@ -480,28 +546,21 @@ export const ProductDetails = () => {
                 />
               )}
             </div>
-            {product.imageURLcolor1 && product.imageURLcolor2 && (
+            {images.length > 1 && (
               <div className="imageThumbnails">
-                <div 
-                  className={`thumbnail ${selectedImage === 1 ? 'active' : ''}`}
-                  onClick={() => setSelectedImage(1)}
-                >
-                  <img 
-                    src={product.imageURLcolor1} 
-                    alt={`${product.productName} - Color 1`}
-                    onError={handleImageError}
-                  />
-                </div>
-                <div 
-                  className={`thumbnail ${selectedImage === 2 ? 'active' : ''}`}
-                  onClick={() => setSelectedImage(2)}
-                >
-                  <img 
-                    src={product.imageURLcolor2} 
-                    alt={`${product.productName} - Color 2`}
-                    onError={handleImageError}
-                  />
-                </div>
+                {images.map((img, index) => (
+                  <div 
+                    key={index}
+                    className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
+                    onClick={() => setSelectedImage(index)}
+                  >
+                    <img 
+                      src={img} 
+                      alt={`${product.productName} - ${index + 1}`}
+                      onError={handleImageError}
+                    />
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -509,23 +568,35 @@ export const ProductDetails = () => {
           <div className="rigthSection">
             <div className="name">{product.productName}</div>
             <div className="type">{product.itemCategory}</div>
-            <div className="productId">Product ID: {product._id}</div>
+            <div className="productId">Product ID: {product.tokenId || product._id}</div>
+            
+            {product.description && (
+              <div className="description">{product.description}</div>
+            )}
+            
+            {product.color && (
+              <div className="colorInfo">Color: {product.color}</div>
+            )}
 
             <div className="starContainer">
               <div className="star">
                 {renderStars(product.Rating)}
               </div>
-              <div className="reviews">{product.RatingCount} Reviews</div>
+              <div className="reviews">{product.RatingCount || 0} Reviews</div>
             </div>
 
             <div className="pricing">
-              <p className="price">₹{product.price}.00</p>
-              <p className="discountPrice">
-                ₹{product.strikedPrice}.00
-              </p>
+              <p className="price">₹{product.price?.toLocaleString()}</p>
+              {product.strikedPrice && (
+                <p className="discountPrice">
+                  ₹{product.strikedPrice?.toLocaleString()}
+                </p>
+              )}
             </div>
 
-            <div className="save">You save {product.discountprice}</div>
+            {savings > 0 && (
+              <div className="save">You save ₹{savings.toLocaleString()} ({discountPercent}%)</div>
+            )}
             <div className="tax">Inclusive of all Taxes</div>
         
             <button className="addToCart" onClick={handleAddToCart}>

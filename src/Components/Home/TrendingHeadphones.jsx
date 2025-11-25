@@ -25,7 +25,7 @@ const TrendingHeadphones = ({ handleDispatch }) => {
             "https://cdn.shopify.com/s/files/1/0057/8938/4802/products/553af994-244a-4b81-9d9e-9967a1b966b3_600x.png?v=1625046259",
          imageURLcolor2:
             "https://cdn.shopify.com/s/files/1/0057/8938/4802/products/04981d98-f010-4553-9ba2-97c9a36fef4e_600x.png?v=1625046259",
-         productName: "boAt BassHeads 100",
+         productName: "Black-R BassHeads 100",
          price: 349,
          strikedPrice: 999,
          Rating: 4.73,
@@ -39,7 +39,7 @@ const TrendingHeadphones = ({ handleDispatch }) => {
             "https://cdn.shopify.com/s/files/1/0057/8938/4802/products/103_600x.png?v=1574927262",
          imageURLcolor2:
             "https://cdn.shopify.com/s/files/1/0057/8938/4802/products/103b_600x.png?v=1574927262",
-         productName: "boAt BassHeads 103",
+         productName: "Black-R BassHeads 103",
          price: 349,
          strikedPrice: 1290,
          Rating: 4.74,

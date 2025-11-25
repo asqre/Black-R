@@ -22,7 +22,7 @@ const NewLaunches = () => {
                </div>
                <div className="launchesDataDiv">
                   <p className="text1">Bluetooth Speaker</p>
-                  <p className="titleText">boAt Stone 1450</p>
+                  <p className="titleText">Black-R Stone 1450</p>
                   <p className="text3">Special launch price</p>
                   <p className="rupeeText">Rs. 3999</p>
                   <div className="flex descriptionDiv">

@@ -42,7 +42,7 @@ const LoginPopup = ({ setLogin, login }) => {
    return (
       <div className="loginPopup" ref={popupRef}>
          <div className="flex popupUpperDiv">
-            <p className="popupText">Hi boAthead!</p>
+            <p className="popupText">Hi Black-R User!</p>
             <ImCross onClick={handleClose} size={13} style={{ cursor: "pointer" }} />
          </div>
          <Link to={"/login"}>

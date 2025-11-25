@@ -23,8 +23,8 @@ export default function Description() {
     return (
         <Desc>
             <div>
-            <h3>boAt Rockerz</h3>
-            <p >it’s time to enjoy a playback experience like never before courtesy boAt stone 1200 14w portal wireless speaker with RCB LEDs. The RGB LEDs pave
+            <h3>Black-R Rockerz</h3>
+            <p >it's time to enjoy a playback experience like never before courtesy Black-R stone 1200 14w portal wireless speaker with RCB LEDs. The RGB LEDs pave
 the way for making the ambience suit a lot more to the music being played and  set the right vibe! its 14w thumping so sound with passive bass radiator
 Offers sheer musical bilss. it supports instant wireless connectivity with bluetooth v5.0. Apart from the wireless connectivity, the user has other
 Options in the form of AUX,USB and FM modes as well. The speakers pumps out nonstop audio for up to 9 hours on the single full charge w/o RGB LEDs

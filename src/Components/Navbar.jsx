@@ -13,6 +13,7 @@ import CartPopup from "./CartPopup";
 import { useSelector } from "react-redux";
 import MorePopup from "./MorePopup";
 import Showpopup from "./Showpopup";
+import Logo from "../assets/logo.png";
 
 const Navbar = () => {
    const [login, setLogin] = useState(false);
@@ -29,8 +30,8 @@ const Navbar = () => {
                <Link to={"/"}>
                   <img
                      className="logo"
-                     src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Boat-Logo_200x_200x_f9c79bf9-9c9a-477d-ab6a-7c889a1f2f70_170x.png?v=1646731229"
-                     alt=""
+                     src={Logo}
+                     alt="Black-R"
                   />
                </Link>
             </div>
