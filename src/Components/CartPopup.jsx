@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiTrash2, FiShoppingBag } from "react-icons/fi";
 import { AiFillHeart, AiOutlineHeart, AiFillGift, AiFillCheckCircle } from "react-icons/ai";
 import "./Styles/cart.css";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { delFromCart, updateQuantity } from "../Redux/AddToCart/actions";
+import CheckoutFormModal from "./CheckoutFormModal";
 
 const CartPopup = ({ cart, setCart }) => {
    const cartItems = useSelector((store) => store.cart.data);
@@ -14,6 +14,7 @@ const CartPopup = ({ cart, setCart }) => {
    const navigate = useNavigate();
    const [wishlistItems, setWishlistItems] = useState({});
    const [imageErrors, setImageErrors] = useState({});
+   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
    const handleImageError = (productId) => {
       setImageErrors(prev => ({ ...prev, [productId]: true }));
@@ -50,6 +51,17 @@ const CartPopup = ({ cart, setCart }) => {
       const qty = item.quantity || 1;
       return sum + item.price * qty;
    }, 0);
+
+   const handlePlaceOrder = () => {
+      setShowCheckoutModal(true);
+   };
+
+   const handleProceedToPayment = (formData) => {
+      setShowCheckoutModal(false);
+      setCart(false);
+      // Navigate to Razorpay payment page with form data
+      navigate("/razorpay", { state: { formData, totalAmount, cartItems } });
+   };
 
    return (
       <>
@@ -190,18 +202,24 @@ const CartPopup = ({ cart, setCart }) => {
                      <p className="orderValue">₹{totalAmount}.00</p>
                   </div>
                </div>
-               <Link to={"/checkout"} onClick={() => setCart(false)}>
-                  <button className="placeOrderBtn">
-                     <div className="placeOrderLeft">
-                        <span className="placeOrderAmount">₹{totalAmount}.00</span>
-                        <span className="placeOrderTax">(Incl. Of All Taxes)</span>
-                     </div>
-                     <span className="placeOrderText">PLACE ORDER</span>
-                  </button>
-               </Link>
+               <button className="placeOrderBtn" onClick={handlePlaceOrder}>
+                  <div className="placeOrderLeft">
+                     <span className="placeOrderAmount">₹{totalAmount}.00</span>
+                     <span className="placeOrderTax">(Incl. Of All Taxes)</span>
+                  </div>
+                  <span className="placeOrderText">PLACE ORDER</span>
+               </button>
             </div>
          )}
          </div>
+         
+         {/* Checkout Form Modal */}
+         <CheckoutFormModal
+            isOpen={showCheckoutModal}
+            onClose={() => setShowCheckoutModal(false)}
+            totalAmount={totalAmount}
+            onProceedToPayment={handleProceedToPayment}
+         />
       </>
    );
 };

@@ -8,6 +8,9 @@ import { Products } from "./Components/Products/Products";
 import Checkout from "./Components/Payments/Checkout";
 import Payments from "./Components/Payments/Payments";
 import Otp from "./Components/Payments/Otp";
+import RazorpayPayment from "./Components/Payments/RazorpayPayment";
+import PaymentSuccess from "./Components/Payments/PaymentSuccess";
+import OrderTracking from "./Components/OrderTracking/OrderTracking";
 import { Login } from "./Components/login/Login";
 import { Register } from "./Components/login/Register";
 import { ProductDetails } from "./Components/Productdescription/productdetails";
@@ -32,6 +35,12 @@ function AppContent() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/product/:id" element={<ProductDetails />}></Route>
+            <Route path="/checkout" element={<Checkout />}></Route>
+            <Route path="/payments" element={<Payments />}></Route>
+            <Route path="/otp" element={<Otp />}></Route>
+            <Route path="/razorpay" element={<RazorpayPayment />}></Route>
+            <Route path="/payment-success" element={<PaymentSuccess />}></Route>
+            <Route path="/track-order" element={<OrderTracking />}></Route>
             <Route
                path="/admin"
                element={

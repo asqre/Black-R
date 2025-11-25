@@ -1,0 +1,275 @@
+/* Checkout Modal Overlay */
+.checkoutModalOverlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.6);
+   z-index: 10000;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   animation: fadeIn 0.3s ease-in-out;
+   padding: 20px;
+   box-sizing: border-box;
+   overflow-y: auto;
+}
+
+@keyframes fadeIn {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
+}
+
+/* Checkout Modal */
+.checkoutModal {
+   background-color: white;
+   border-radius: 12px;
+   width: 100%;
+   max-width: 600px;
+   max-height: calc(100vh - 40px);
+   overflow-y: auto;
+   z-index: 10001;
+   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+   animation: slideUp 0.3s ease-in-out;
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   margin: 0 auto;
+}
+
+@keyframes slideUp {
+   from {
+      transform: translateY(50px);
+      opacity: 0;
+   }
+   to {
+      transform: translateY(0);
+      opacity: 1;
+   }
+}
+
+.checkoutModalHeader {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 20px 24px;
+   border-bottom: 1px solid #e0e0e0;
+   position: sticky;
+   top: 0;
+   background-color: white;
+   z-index: 10;
+   border-radius: 12px 12px 0 0;
+}
+
+.checkoutModalTitle {
+   margin: 0;
+   font-size: 1.5rem;
+   font-weight: 600;
+   color: #333;
+}
+
+.checkoutModalCloseBtn {
+   background: none;
+   border: none;
+   cursor: pointer;
+   color: #666;
+   padding: 4px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 4px;
+   transition: all 0.2s;
+}
+
+.checkoutModalCloseBtn:hover {
+   background-color: #f0f0f0;
+   color: #333;
+}
+
+/* Form */
+.checkoutForm {
+   padding: 24px;
+}
+
+.formSection {
+   margin-bottom: 32px;
+}
+
+.formSection:last-of-type {
+   margin-bottom: 24px;
+}
+
+.formSectionTitle {
+   font-size: 1.1rem;
+   font-weight: 600;
+   color: #333;
+   margin: 0 0 20px 0;
+   padding-bottom: 8px;
+   border-bottom: 2px solid #f0f0f0;
+}
+
+.formGroup {
+   margin-bottom: 20px;
+}
+
+.formGroup label {
+   display: block;
+   margin-bottom: 8px;
+   font-size: 0.9rem;
+   font-weight: 500;
+   color: #555;
+}
+
+.formGroup input {
+   width: 100%;
+   padding: 12px;
+   border: 1px solid #ddd;
+   border-radius: 6px;
+   font-size: 0.95rem;
+   transition: all 0.2s;
+   box-sizing: border-box;
+}
+
+.formGroup input:focus {
+   outline: none;
+   border-color: rgb(221, 0, 0);
+   box-shadow: 0 0 0 3px rgba(221, 0, 0, 0.1);
+}
+
+.formGroup input.error {
+   border-color: #e74c3c;
+}
+
+.formGroup input.error:focus {
+   box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.errorMessage {
+   display: block;
+   color: #e74c3c;
+   font-size: 0.8rem;
+   margin-top: 4px;
+}
+
+.formRow {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 16px;
+}
+
+/* Form Footer */
+.formFooter {
+   margin-top: 32px;
+   padding-top: 20px;
+   border-top: 2px solid #f0f0f0;
+}
+
+.orderTotal {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 20px;
+   padding: 12px;
+   background-color: #f9f9f9;
+   border-radius: 6px;
+}
+
+.totalLabel {
+   font-size: 1rem;
+   font-weight: 500;
+   color: #666;
+}
+
+.totalAmount {
+   font-size: 1.3rem;
+   font-weight: bold;
+   color: rgb(221, 0, 0);
+}
+
+.formActions {
+   display: flex;
+   gap: 12px;
+}
+
+.cancelBtn,
+.proceedBtn {
+   flex: 1;
+   padding: 14px 24px;
+   border: none;
+   border-radius: 6px;
+   font-size: 1rem;
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.2s;
+}
+
+.cancelBtn {
+   background-color: #f0f0f0;
+   color: #333;
+}
+
+.cancelBtn:hover {
+   background-color: #e0e0e0;
+}
+
+.proceedBtn {
+   background-color: rgb(15, 15, 15);
+   color: white;
+}
+
+.proceedBtn:hover {
+   background-color: rgb(30, 30, 30);
+   transform: translateY(-1px);
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.proceedBtn:active {
+   transform: translateY(0);
+}
+
+/* Responsive */
+@media only screen and (max-width: 720px) {
+   .checkoutModalOverlay {
+      padding: 10px;
+   }
+   
+   .checkoutModal {
+      width: 100%;
+      max-width: 100%;
+      max-height: calc(100vh - 20px);
+   }
+   
+   .checkoutModalHeader {
+      padding: 16px 20px;
+   }
+   
+   .checkoutModalTitle {
+      font-size: 1.3rem;
+   }
+   
+   .checkoutForm {
+      padding: 20px;
+   }
+   
+   .formRow {
+      grid-template-columns: 1fr;
+      gap: 0;
+   }
+   
+   .formActions {
+      flex-direction: column;
+   }
+   
+   .cancelBtn,
+   .proceedBtn {
+      width: 100%;
+   }
+}
+

@@ -1,0 +1,194 @@
+.razorpayContainer {
+   min-height: 100vh;
+   background-color: rgb(20, 20, 20);
+   padding: 100px 20px 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.razorpayCard {
+   background-color: white;
+   border-radius: 12px;
+   padding: 32px;
+   max-width: 600px;
+   width: 100%;
+   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.razorpayHeader {
+   text-align: center;
+   margin-bottom: 32px;
+}
+
+.razorpayHeader h2 {
+   margin: 0 0 8px 0;
+   font-size: 1.8rem;
+   color: #333;
+   font-weight: 600;
+}
+
+.razorpaySubtitle {
+   margin: 0;
+   color: #666;
+   font-size: 0.95rem;
+}
+
+.orderSummarySection {
+   background-color: #f9f9f9;
+   border-radius: 8px;
+   padding: 24px;
+   margin-bottom: 24px;
+}
+
+.orderSummarySection h3 {
+   margin: 0 0 20px 0;
+   font-size: 1.2rem;
+   color: #333;
+   font-weight: 600;
+   padding-bottom: 12px;
+   border-bottom: 2px solid #e0e0e0;
+}
+
+.summaryRow {
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-start;
+   margin-bottom: 12px;
+   font-size: 0.95rem;
+}
+
+.summaryRow span:first-child {
+   font-weight: 500;
+   color: #666;
+   min-width: 80px;
+}
+
+.summaryRow span:last-child {
+   color: #333;
+   text-align: right;
+   flex: 1;
+   margin-left: 16px;
+}
+
+.summaryDivider {
+   height: 1px;
+   background-color: #e0e0e0;
+   margin: 16px 0;
+}
+
+.totalRow {
+   margin-top: 8px;
+   padding-top: 12px;
+   border-top: 2px solid #e0e0e0;
+}
+
+.totalPrice {
+   font-size: 1.3rem;
+   font-weight: bold;
+   color: rgb(221, 0, 0);
+}
+
+.errorAlert {
+   background-color: #fee;
+   border: 1px solid #fcc;
+   color: #c33;
+   padding: 12px;
+   border-radius: 6px;
+   margin-bottom: 20px;
+   font-size: 0.9rem;
+}
+
+.razorpayActions {
+   display: flex;
+   gap: 12px;
+   margin-bottom: 20px;
+}
+
+.backBtn,
+.payBtn {
+   flex: 1;
+   padding: 14px 24px;
+   border: none;
+   border-radius: 6px;
+   font-size: 1rem;
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.2s;
+}
+
+.backBtn {
+   background-color: #f0f0f0;
+   color: #333;
+}
+
+.backBtn:hover:not(:disabled) {
+   background-color: #e0e0e0;
+}
+
+.payBtn {
+   background-color: rgb(15, 15, 15);
+   color: white;
+}
+
+.payBtn:hover:not(:disabled) {
+   background-color: rgb(30, 30, 30);
+   transform: translateY(-1px);
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.backBtn:disabled,
+.payBtn:disabled {
+   opacity: 0.6;
+   cursor: not-allowed;
+}
+
+.razorpayFooter {
+   text-align: center;
+   padding-top: 20px;
+   border-top: 1px solid #e0e0e0;
+}
+
+.razorpayFooter p {
+   margin: 0;
+   color: #999;
+   font-size: 0.85rem;
+}
+
+@media only screen and (max-width: 720px) {
+   .razorpayContainer {
+      padding: 80px 15px 30px;
+   }
+
+   .razorpayCard {
+      padding: 24px 20px;
+   }
+
+   .razorpayHeader h2 {
+      font-size: 1.5rem;
+   }
+
+   .orderSummarySection {
+      padding: 20px;
+   }
+
+   .summaryRow {
+      flex-direction: column;
+      gap: 4px;
+   }
+
+   .summaryRow span:last-child {
+      text-align: left;
+      margin-left: 0;
+   }
+
+   .razorpayActions {
+      flex-direction: column;
+   }
+
+   .backBtn,
+   .payBtn {
+      width: 100%;
+   }
+}
+
